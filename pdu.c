@@ -132,7 +132,7 @@ coap_new_pdu() {
   pdu = coap_pdu_init(0, 0, uip_ntohs(COAP_INVALID_TID), COAP_MAX_PDU_SIZE);
 #endif /* WITH_CONTIKI */
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   if (!pdu)
     coap_log(LOG_CRIT, "coap_new_pdu: cannot allocate memory for new PDU\n");
 #endif

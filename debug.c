@@ -86,7 +86,7 @@ print_timestamp(char *s, size_t len, coap_tick_t t) {
 
 #endif /* HAVE_TIME_H */
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
 
 #ifndef HAVE_STRNLEN
 /** 
@@ -326,7 +326,7 @@ coap_show_pdu(const coap_pdu_t *pdu) {
 }
 #endif /* WITH_CONTIKI */
 
-#endif /* NDEBUG */
+#endif /* DEBUG_ENABLED */
 
 #ifndef WITH_CONTIKI
 void 

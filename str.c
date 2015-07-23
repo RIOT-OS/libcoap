@@ -17,7 +17,7 @@
 str *coap_new_string(size_t size) {
   str *s = coap_malloc(sizeof(str) + size + 1);
   if ( !s ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_CRIT, "coap_new_string: malloc\n");
 #endif
     return NULL;

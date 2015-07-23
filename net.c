@@ -243,7 +243,7 @@ coap_new_node() {
   node = coap_malloc_node();
 
   if ( ! node ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_WARNING, "coap_new_node: malloc\n");
 #endif
     return NULL;
@@ -327,7 +327,7 @@ coap_new_context(
 
 #ifndef WITH_CONTIKI
   if ( !c ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_EMERG, "coap_init: malloc:\n");
 #endif
     return NULL;
@@ -362,20 +362,20 @@ coap_new_context(
 #ifdef WITH_POSIX
   c->sockfd = socket(listen_addr->addr.sa.sa_family, SOCK_DGRAM, 0);
   if ( c->sockfd < 0 ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_EMERG, "coap_new_context: socket\n");
 #endif /* WITH_POSIX */
     goto onerror;
   }
 
   if ( setsockopt( c->sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse) ) < 0 ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_WARNING, "setsockopt SO_REUSEADDR\n");
 #endif
   }
 
   if (bind(c->sockfd, &listen_addr->addr.sa, listen_addr->size) < 0) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     coap_log(LOG_EMERG, "coap_new_context: bind\n");
 #endif
     goto onerror;
@@ -923,7 +923,7 @@ if (!coap_pdu_parse((unsigned char *)buf, bytes_read, node->pdu)) {
   coap_transaction_id(&node->remote, node->pdu, &node->id);
   coap_insert_node(&ctx->recvqueue, node);
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   if (LOG_DEBUG <= coap_get_log_level()) {
 #ifndef INET6_ADDRSTRLEN
 #define INET6_ADDRSTRLEN 40

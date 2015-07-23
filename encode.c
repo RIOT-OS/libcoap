@@ -6,7 +6,7 @@
  * README for terms of use. 
  */
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
 #  include <stdio.h>
 #endif
 

@@ -282,7 +282,7 @@ message_handler(struct coap_context_t  *ctx,
   unsigned char *databuf;
   coap_tid_t tid;
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   if (LOG_DEBUG <= coap_get_log_level()) {
     debug("** process incoming %d.%02d response:\n",
 	  (received->hdr->code >> 5), received->hdr->code & 0x1F);
@@ -1075,7 +1075,7 @@ main(int argc, char **argv) {
   if (! (pdu = coap_new_request(ctx, method, optlist)))
     return -1;
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   if (LOG_DEBUG <= coap_get_log_level()) {
     debug("sending CoAP request:\n");
     coap_show_pdu(pdu);

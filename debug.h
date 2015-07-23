@@ -54,7 +54,10 @@ void coap_log_impl(coap_log_t level, const char *format, ...);
 #endif
 
 #ifndef NDEBUG
+#define DEBUG_ENABLED
+#endif
 
+#if DEBUG_ENABLED
 /* A set of convenience macros for common log levels. */
 #define info(...) coap_log(LOG_INFO, __VA_ARGS__)
 #define warn(...) coap_log(LOG_WARNING, __VA_ARGS__)

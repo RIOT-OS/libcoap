@@ -43,7 +43,7 @@ notify(coap_context_t *context, coap_resource_t *res,
   int ls, finished=0;
   unsigned char ct, d;
   unsigned int length;
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   char addr[INET6_ADDRSTRLEN];
 #endif
 
@@ -90,7 +90,7 @@ notify(coap_context_t *context, coap_resource_t *res,
     /* TODO: add mediatype */
   }
 
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   if ( inet_ntop(sub->subscriber.addr.sa.sa_family, 
 		 &sub->subscriber.addr, addr, sizeof(addr)) ) {
     debug("*** notify for %s to [%s]\n", res->uri->path.s, addr);
@@ -100,7 +100,7 @@ notify(coap_context_t *context, coap_resource_t *res,
 				 &sub->subscriber.addr.sa,
 				 sub->subscriber.size, pdu) 
       == COAP_INVALID_TID) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     debug("coap_check_resource_list: error sending notification\n");
 #endif
     coap_delete_pdu(pdu);
@@ -164,7 +164,7 @@ coap_get_resource_from_key(coap_context_t *ctx, coap_key_t key) {
 
 coap_resource_t *
 coap_get_resource(coap_context_t *ctx, coap_uri_t *uri) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   int i;
   printf("search resource %ux", coap_uri_hash(uri));
   for (i=0; i < uri->path.length; ++i) {
@@ -180,7 +180,7 @@ void
 coap_check_subscriptions(coap_context_t *context) {
   time_t now;
   coap_list_t *node;
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
   char addr[INET6_ADDRSTRLEN];
 #endif
 
@@ -191,7 +191,7 @@ coap_check_subscriptions(coap_context_t *context) {
 
   node = context->subscriptions;
   while ( node && COAP_SUBSCRIPTION(node)->expires < now ) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
     if (inet_ntop(COAP_SUBSCRIPTION(node)->subscriber.addr.sa.sa_family,
 		  &COAP_SUBSCRIPTION(node)->subscriber.addr,
 		  addr, sizeof(addr))) {
@@ -236,7 +236,7 @@ coap_delete_resource(coap_context_t *context, coap_key_t key) {
   for (prev = NULL, node = context->resources; node;
        prev = node, node = node->next) {
     if (coap_uri_hash(COAP_RESOURCE(node)->uri) == key) {
-#ifndef NDEBUG
+#ifdef DEBUG_ENABLED
       debug("removed key %lu (%s)\n",key,COAP_RESOURCE(node)->uri->path.s);
 #endif
       if (!prev)
