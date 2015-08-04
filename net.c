@@ -930,9 +930,10 @@ if (!coap_pdu_parse((unsigned char *)buf, bytes_read, node->pdu)) {
 #endif
     unsigned char addr[INET6_ADDRSTRLEN+8];
 
-    if (coap_print_addr(&src, addr, INET6_ADDRSTRLEN+8))
+    if (coap_print_addr(&src, addr, INET6_ADDRSTRLEN+8)) {
       debug("** received %d bytes from %s:\n", (int)bytes_read, addr);
 
+    }
     coap_show_pdu( node->pdu );
   }
 #endif
